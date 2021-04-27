@@ -17,32 +17,38 @@ public class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapte
     private List<TaskModel> list;
     private MainActivity mainActivity;
 
-    public TaskRecyclerAdapter(MainActivity activity){
-        this.mainActivity=activity;
+    public TaskRecyclerAdapter(MainActivity activity) {
+        this.mainActivity = activity;
     }
 
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_row,parent,false);
+                .inflate(R.layout.recycler_row, parent, false);
         return new ViewHolder(view);
     }
 
-    public void onBindViewHolder(ViewHolder holder, int position){
+    public void onBindViewHolder(ViewHolder holder, int position) {
         TaskModel taskModel = list.get(position);
         holder.task.setText(taskModel.getTask());
         holder.task.setChecked(toBoolean(taskModel.getStatus()));
     }
-    public int getItemCount(){
+    public void setTask(List<TaskModel> taskModelList){
+        this.list = taskModelList;
+        notifyDataSetChanged();
+    }
+
+    public int getItemCount() {
         return list.size();
     }
-    public boolean toBoolean(int n){
-        return n!=0;
+
+    public boolean toBoolean(int n) {
+        return n != 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         CheckBox task;
 
-        ViewHolder(View view){
+        ViewHolder(View view) {
             super(view);
             task = view.findViewById(R.id.checkbox);
         }
